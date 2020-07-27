@@ -29,14 +29,14 @@ async function getCapabilitiesForResource(options, resource) {
 async function getResourceById(options, id) {
   const route = `${options.apiRoot}/files/${id}`;
   const method = 'GET';
-  const response = await request(method, route);
+  const response = await request(method, route).set('Access-Token', options.accessToken).set('Client-Id', options.clientId);
   return normalizeResource(response.body);
 }
 
 async function getChildrenForId(options, { id, sortBy = 'name', sortDirection = 'ASC' }) {
   const route = `${options.apiRoot}/files/${id}/children?orderBy=${sortBy}&orderDirection=${sortDirection}`;
   const method = 'GET';
-  const response = await request(method, route);
+  const response = await request(method, route).set('Access-Token', options.accessToken).set('Client-Id', options.clientId);
   return response.body.items.map(normalizeResource)
 }
 
@@ -54,7 +54,7 @@ async function getParentsForId(options, id, result = []) {
 
 async function getBaseResource(options) {
   const route = `${options.apiRoot}/files`;
-  const response = await request.get(route);
+  const response = await request.get(route).set('Access-Token', options.accessToken).set('Client-Id', options.clientId);
   return normalizeResource(response.body);
 }
 
@@ -96,6 +96,8 @@ async function getParentIdForResource(options, resource) {
 async function uploadFileToId({ apiOptions, parentId, file, onProgress }) {
   const route = `${apiOptions.apiRoot}/files`;
   return request.post(route).
+    set('Access-Token', options.accessToken).
+    set('Client-Id', options.clientId).
     field('type', 'file').
     field('parentId', parentId).
     attach('files', file.file, file.name).
@@ -110,7 +112,7 @@ async function downloadResources({ apiOptions, resources, onProgress }) {
     `${apiOptions.apiRoot}/download?`
   );
 
-  const res = await request.get(downloadUrl).
+  const res = await request.set('Access-Token', options.accessToken).set('Client-Id', options.clientId).get(downloadUrl).
     responseType('blob').
     on('progress', event => {
       onProgress(event.percent);
@@ -127,7 +129,7 @@ async function createFolder(options, parentId, folderName) {
     name: folderName,
     type: 'dir'
   };
-  return request(method, route).send(params)
+  return request(method, route).set('Access-Token', options.accessToken).set('Client-Id', options.clientId).send(params)
 }
 
 function getResourceName(apiOptions, resource) {
@@ -137,13 +139,13 @@ function getResourceName(apiOptions, resource) {
 async function renameResource(options, id, newName) {
   const route = `${options.apiRoot}/files/${id}`;
   const method = 'PATCH';
-  return request(method, route).type('application/json').send({ name: newName })
+  return request(method, route).set('Access-Token', options.accessToken).set('Client-Id', options.clientId).type('application/json').send({ name: newName })
 }
 
 async function removeResource(options, resource) {
   const route = `${options.apiRoot}/files/${resource.id}`;
   const method = 'DELETE';
-  return request(method, route)
+  return request(method, route).set('Access-Token', options.accessToken).set('Client-Id', options.clientId)
 }
 
 async function removeResources(options, selectedResources) {
