@@ -1,7 +1,7 @@
 {
   "name": "react-rad-filemanager-connector-node-v1",
-  "version": "1.0.0",
-  "description": "@opuscapita/filemanager connector for NodeJS API v1",
+  "version": "0.0.1",
+  "description": "javadx/filemanager connector for Rad services",
   "main": "lib/index.js",
   "scripts": {
     "start": "babel --watch --copy-files src --out-dir lib",
@@ -11,7 +11,10 @@
     "prepublish": "npm run build"
   },
   "license": "Apache-2.0",
-  "repository": "javadx/filemanager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javadx/filemanager.git"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -43,5 +46,13 @@
     "eslint-config-opuscapita": "2.0.1",
     "eslint-plugin-react": "7.7.0",
     "rimraf": "2.6.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/javadx/filemanager/issues"
+  },
+  "homepage": "https://github.com/javadx/filemanager#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "javad khodadadi"
 }
