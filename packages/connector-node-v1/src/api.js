@@ -96,8 +96,8 @@ async function getParentIdForResource(options, resource) {
 async function uploadFileToId({ apiOptions, parentId, file, onProgress }) {
   const route = `${apiOptions.apiRoot}/files`;
   return request.post(route).
-    set('Access-Token', options.accessToken).
-    set('Client-Id', options.clientId).
+    set('Access-Token', apiOptions.accessToken).
+    set('Client-Id', apiOptions.clientId).
     field('type', 'file').
     field('parentId', parentId).
     attach('files', file.file, file.name).
@@ -112,7 +112,7 @@ async function downloadResources({ apiOptions, resources, onProgress }) {
     `${apiOptions.apiRoot}/download?`
   );
 
-  const res = await request.set('Access-Token', options.accessToken).set('Client-Id', options.clientId).get(downloadUrl).
+  const res = await request.get(downloadUrl).
     responseType('blob').
     on('progress', event => {
       onProgress(event.percent);
