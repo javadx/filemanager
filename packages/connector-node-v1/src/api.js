@@ -108,7 +108,7 @@ async function uploadFileToId({ apiOptions, parentId, file, onProgress }) {
 
 async function downloadResources({ apiOptions, resources, onProgress }) {
   const downloadUrl = resources.reduce(
-    (url, resource, num) => url + (num === 0 ? '' : '&') + `items=${resource.id}`,
+    (url, resource, num) => url + (num === 0 ? '' : '&') + `items[]=${resource.id}`,
     `${apiOptions.apiRoot}/download?`
   );
 
