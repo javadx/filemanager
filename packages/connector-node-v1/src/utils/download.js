@@ -3,25 +3,20 @@ import FileSaver from 'file-saver';
 // a case when we need to silently download a file using Javascript, and prompt to save it afterwards
 function promptToSaveBlob({ content, name, downloadUrl }) {
   if (downloadUrl) {
-    let xhr = new XMLHttpRequest();
-      xhr.open("GET", downloadUrl, true);
-      xhr.responseType = "blob";
-      xhr.onload = function (e) {
-        if (this.status == 200) {
-          const blob = this.response;
-          const a = document.createElement("a");
-          document.body.appendChild(a);
-          const blobUrl = window.URL.createObjectURL(blob);
-          a.href = blobUrl;
-          a.download = filename;
-          a.click();
-          setTimeout(() => {
-            window.URL.revokeObjectURL(blobUrl);
-            document.body.removeChild(a);
-          }, 0);
-        }
-      };
-      xhr.send();
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", downloadUrl, true);
+    xhr.responseType = "blob";
+    xhr.onload = function(){
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(this.response);
+        var tag = document.createElement('a');
+        tag.href = imageUrl;
+        tag.download = name;
+        document.body.appendChild(tag);
+        tag.click();
+        document.body.removeChild(tag);
+    }
+    xhr.send();
     // const iframeId = 'oc-fm--filemanager-download-iframe';
     // let iframeDOMNode = document.getElementById(iframeId);
 

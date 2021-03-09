@@ -1,6 +1,6 @@
 {
   "name": "react-rad-filemanager-connector-node-v1",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "javadx/filemanager connector for Rad services",
   "main": "lib/index.js",
   "scripts": {
