@@ -91,7 +91,7 @@ async function handler(apiOptions, actions) {
     const quantity = resources.length;
     if (quantity === 1) {
       const { id, name } = resources[0];
-      const downloadUrl = `${apiOptions.apiRoot}/download?items=${id}`;
+      const downloadUrl = apiOptions.podSpaceApi + '/' + id + '?dl=1';
       // check if the file is available and trigger native browser saving prompt
       // if server is down the error will be catched and trigger relevant notification
       await api.getResourceById(apiOptions, id);
